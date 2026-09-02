@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Astris Mathematical Society</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    color:white;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 15% 20%,#063b70 0,transparent 25%),
+        radial-gradient(circle at 85% 80%,#071b4d 0,transparent 30%),
+        #020611;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        radial-gradient(white 1px,transparent 1px),
+        radial-gradient(#168cff 1px,transparent 1px);
+    background-size:80px 80px,130px 130px;
+    opacity:.18;
+}
+
+header{
+    text-align:center;
+    padding:35px 20px 25px;
+}
+
+.logo{
+    font-size:48px;
+    font-weight:bold;
+    color:#66c7ff;
+    text-shadow:0 0 25px #008cff;
+}
+
+.subtitle{
+    font-size:20px;
+    letter-spacing:6px;
+    color:#b9e5ff;
+}
+
+nav{
+    width:95%;
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    padding:10px;
+    background:rgba(3,15,35,.88);
+    border:1px solid #1267a8;
+    border-radius:18px;
+}
+
+nav button{
+    flex:1;
+    min-width:145px;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:transparent;
+    color:#bde8ff;
+    font-size:16px;
+    cursor:pointer;
+}
+
+nav button:hover,
+nav button.active{
+    background:#075ca8;
+    color:white;
+    box-shadow:0 0 18px #087cff;
+}
+
+main{
+    width:95%;
+    max-width:1200px;
+    margin:25px auto;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.card{
+    background:rgba(4,18,40,.9);
+    border:1px solid #1267a8;
+    border-radius:18px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 0 25px rgba(0,140,255,.1);
+}
+
+h2{
+    color:#4fc3ff;
+    margin-bottom:20px;
+}
+
+h3{
+    color:#8bdcff;
+    margin-bottom:10px;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:13px;
+    margin:7px 0;
+    border:1px solid #1b73b7;
+    border-radius:10px;
+    background:#020b19;
+    color:white;
+    outline:none;
+}
+
+textarea{
+    min-height:150px;
+}
+
+button.action{
+    padding:12px 20px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(90deg,#006be6,#00a8ff);
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button.action:hover{
+    box-shadow:0 0 18px #008cff;
+}
+
+.profile{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:25px;
+    align-items:center;
+}
+
+.avatar{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#031b38;
+    border:2px solid #19a7ff;
+    box-shadow:0 0 25px #007bff;
+    font-size:35px;
+}
+
+.info p{
+    padding:10px 0;
+    border-bottom:1px solid #123554;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:5px 12px;
+    border-radius:20px;
+    background:#075ca8;
+}
+
+.verified{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:#168cff;
+    color:white;
+    font-size:13px;
+    font-weight:bold;
+    box-shadow:0 0 10px #168cff;
+}
+
+.founder{
+    color:#66c7ff;
+}
+
+.post{
+    border-left:3px solid #079cff;
+    padding:15px;
+    margin:15px 0;
+    background:#031426;
+    border-radius:8px;
+}
+
+.task{
+    padding:18px;
+    margin:12px 0;
+    border:1px solid #16537e;
+    border-radius:12px;
+    background:#031426;
+}
+
+#friendResult{
+    margin-top:15px;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#7194ae;
+}
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:34px;
+    }
+
+    .subtitle{
+        font-size:14px;
+    }
+
+    .profile{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .avatar{
+        margin:auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+    ASTRIS
+</div>
+
+<div class="subtitle">
+    MATHEMATICAL SOCIETY · AMS
+</div>
+
+</header>
+
+
+<nav>
+
+<button class="active"
+onclick="showPage('account',this)">
+👤 Tài khoản
+</button>
+
+<button onclick="showPage('forum',this)">
+💬 Diễn đàn
+</button>
+
+<button onclick="showPage('friends',this)">
+👥 Kết bạn
+</button>
+
+<button onclick="showPage('tasks',this)">
+📚 Nhiệm vụ
+</button>
+
+<button onclick="showPage('about',this)">
+ⓘ Giới thiệu
+</button>
+
+</nav>
+
+
+<main>
+
+
+<!-- =================================================
+     TÀI KHOẢN
+================================================= -->
+
+<section id="account" class="page active">
+
+
+<div class="card" id="loginBox">
+
+<h2>🔐 Đăng nhập AMS</h2>
+
+<input
+id="loginID"
+placeholder="ID hoặc Email">
+
+<input
+id="loginPass"
+type="password"
+placeholder="Mật khẩu">
+
+<button
+class="action"
+onclick="login()">
+
+Đăng nhập
+
+</button>
+
+
+<hr style="margin:20px 0;border-color:#16405f">
+
+
+<h3>Đăng ký thành viên</h3>
+
+<input
+id="regName"
+placeholder="Họ và tên">
+
+<input
+id="regBirth"
+type="number"
+placeholder="Năm sinh">
+
+<input
+id="regID"
+placeholder="Tạo ID">
+
+<input
+id="regPass"
+type="password"
+placeholder="Mật khẩu">
+
+<button
+class="action"
+onclick="register()">
+
+Đăng ký
+
+</button>
+
+</div>
+
+
+
+<!-- HỒ SƠ -->
+
+<div
+class="card"
+id="profileBox"
+style="display:none">
+
+<h2>🌌 Hồ sơ thành viên</h2>
+
+
+<div class="profile">
+
+
+<div class="avatar">
+AMS
+</div>
+
+
+<div class="info">
+
+
+<p>
+
+<b>Tên:</b>
+
+<span id="pName"></span>
+
+<span id="pVerified"></span>
+
+</p>
+
+
+<p>
+
+<b>Năm sinh:</b>
+
+<span id="pBirth"></span>
+
+</p>
+
+
+<p>
+
+<b>ID:</b>
+
+<span id="pID"></span>
+
+</p>
+
+
+<p>
+
+<b>Chức vụ:</b>
+
+<span
+id="pRole"
+class="badge">
+</span>
+
+</p>
+
+
+</div>
+
+</div>
+
+
+<button
+class="action"
+onclick="logout()">
+
+Đăng xuất
+
+</button>
+
+</div>
+
+</section>
+
+
+
+<!-- =================================================
+     DIỄN ĐÀN
+================================================= -->
+
+<section id="forum" class="page">
+
+<div class="card">
+
+<h2>💬 Diễn đàn Toán học</h2>
+
+<input
+id="postTitle"
+placeholder="Tiêu đề thảo luận">
+
+<textarea
+id="postText"
+placeholder="Viết vấn đề Toán học hoặc khoa học...">
+</textarea>
+
+<button
+class="action"
+onclick="createPost()">
+
+Đăng bài
+
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>📖 Thảo luận</h2>
+
+<div id="posts">
+
+<div class="post">
+
+<h3>
+Giả thuyết Riemann
+</h3>
+
+<p>
+Mọi người nghĩ gì về giả thuyết Riemann?
+</p>
+
+</div>
+
+
+<div class="post">
+
+<h3>
+Toán học và Vật lý
+</h3>
+
+<p>
+Toán học đóng vai trò như thế nào
+trong việc mô tả vũ trụ?
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =================================================
+     KẾT BẠN
+================================================= -->
+
+<section id="friends" class="page">
+
+<div class="card">
+
+<h2>👥 Kết bạn</h2>
+
+<p>
+Tìm thành viên bằng ID:
+</p>
+
+<input
+id="friendID"
+placeholder="Ví dụ: AMS001">
+
+<button
+class="action"
+onclick="findFriend()">
+
+🔎 Tìm kiếm
+
+</button>
+
+<div id="friendResult"></div>
+
+</div>
+
+</section>
+
+
+
+<!-- =================================================
+     NHIỆM VỤ
+================================================= -->
+
+<section id="tasks" class="page">
+
+<div class="card">
+
+<h2>📚 Nhiệm vụ Toán học</h2>
+
+<p>
+Hoàn thành 10 bài tập từ dễ → khó.
+</p>
+
+<div id="taskList"></div>
+
+</div>
+
+</section>
+
+
+
+<!-- =================================================
+     GIỚI THIỆU
+================================================= -->
+
+<section id="about" class="page">
+
+<div class="card">
+
+<h2>🌌 Astris Mathematical Society</h2>
+
+<p style="line-height:1.9">
+
+<b>
+Astris Mathematical Society (AMS)
+</b>
+
+là một tổ chức phi lợi nhuận được tạo ra
+để phục vụ việc nghiên cứu, học tập và
+trao đổi kiến thức Toán học lẫn khoa học.
+
+<br><br>
+
+Được dẫn dắt bởi các đồng sáng lập:
+
+<br><br>
+
+<span class="founder">
+
+<b>Phạm Huỳnh</b>
+
+<span class="verified">
+✓
+</span>
+
+</span>
+
+<br>
+
+<span class="founder">
+
+<b>Lê Ngọc Hoàng Long</b>
+
+<span class="verified">
+✓
+</span>
+
+</span>
+
+<br>
+
+<span class="founder">
+
+<b>Lai Gia Đạt</b>
+
+<span class="verified">
+✓
+</span>
+
+</span>
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>🔬 Mục tiêu</h2>
+
+<p style="line-height:1.9">
+
+• Khuyến khích học tập Toán học<br>
+• Trao đổi kiến thức khoa học<br>
+• Kết nối những người yêu Toán<br>
+• Phát triển tư duy logic<br>
+• Khuyến khích nghiên cứu khoa học
+
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+
+
+<footer>
+
+© 2026 Astris Mathematical Society (AMS)
+
+</footer>
+
+
+
+<script>
+
+/* =================================================
+   TÀI KHOẢN NHÀ SÁNG LẬP
+================================================= */
+
+const founders = [
+
+{
+    name:"Phạm Huỳnh",
+    birth:"2013",
+    id:"AMS001",
+    password:"AYZAY OF OMNIVER",
+    role:"Đồng sáng lập",
+    verified:true
+},
+
+{
+    name:"Lê Ngọc Hoàng Long",
+    birth:"2015",
+    id:"AMS002",
+    password:"Long9827",
+    role:"Đồng sáng lập",
+    verified:true
+},
+
+{
+    name:"Lai Gia Đạt",
+    birth:"2015",
+    id:"AMS003",
+    password:"Dat6819",
+    role:"Đồng sáng lập",
+    verified:true
+}
+
+];
+
+
+/* =================================================
+   CHUYỂN TRANG
+================================================= */
+
+function showPage(page,button){
+
+    document.querySelectorAll(".page")
+    .forEach(p=>{
+        p.classList.remove("active");
+    });
+
+    document.getElementById(page)
+    .classList.add("active");
+
+
+    document.querySelectorAll("nav button")
+    .forEach(b=>{
+        b.classList.remove("active");
+    });
+
+    button.classList.add("active");
+}
+
+
+
+/* =================================================
+   ĐĂNG KÝ
+================================================= */
+
+function register(){
+
+    let user={
+
+        name:
+        document.getElementById("regName").value,
+
+        birth:
+        document.getElementById("regBirth").value,
+
+        id:
+        document.getElementById("regID").value,
+
+        pass:
+        document.getElementById("regPass").value,
+
+        role:"Thành viên",
+
+        verified:false
+
+    };
+
+
+    if(
+        !user.name ||
+        !user.birth ||
+        !user.id ||
+        !user.pass
+    ){
+
+        alert(
+            "Vui lòng nhập đầy đủ thông tin!"
+        );
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "AMS_user",
+        JSON.stringify(user)
+    );
+
+
+    alert(
+        "Đăng ký thành công!"
+    );
+
+
+    loginUser(user);
+}
+
+
+
+/* =================================================
+   ĐĂNG NHẬP
+================================================= */
+
+function login(){
+
+    let id =
+        document.getElementById(
+            "loginID"
+        ).value;
+
+
+    let pass =
+        document.getElementById(
+            "loginPass"
+        ).value;
+
+
+    /* Nhà sáng lập */
+
+    let founder =
+        founders.find(
+            f =>
+            f.id === id &&
+            f.password === pass
+        );
+
+
+    if(founder){
+
+        loginUser(founder);
+
+        return;
+    }
+
+
+    /* Thành viên thường */
+
+    let saved =
+        localStorage.getItem(
+            "AMS_user"
+        );
+
+
+    if(saved){
+
+        let user =
+            JSON.parse(saved);
+
+
+        if(
+            user.id === id &&
+            user.pass === pass
+        ){
+
+            loginUser(user);
+
+            return;
+        }
+
+    }
+
+
+    alert(
+        "ID hoặc mật khẩu không đúng!"
+    );
+}
+
+
+
+/* =================================================
+   HIỂN THỊ HỒ SƠ
+================================================= */
+
+function loginUser(user){
+
+    document.getElementById(
+        "loginBox"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "profileBox"
+    ).style.display="block";
+
+
+    document.getElementById(
+        "pName"
+    ).textContent =
+        user.name;
+
+
+    document.getElementById(
+        "pBirth"
+    ).textContent =
+        user.birth || "—";
+
+
+    document.getElementById(
+        "pID"
+    ).textContent =
+        user.id;
+
+
+    document.getElementById(
+        "pRole"
+    ).textContent =
+        user.role;
+
+
+    /* TÍCH XANH */
+
+    let verified =
+        document.getElementById(
+            "pVerified"
+        );
+
+
+    if(user.verified){
+
+        verified.innerHTML =
+        ' <span class="verified">✓</span>';
+
+    }else{
+
+        verified.innerHTML = "";
+
+    }
+
+}
+
+
+
+/* =================================================
+   ĐĂNG XUẤT
+================================================= */
+
+function logout(){
+
+    document.getElementById(
+        "loginBox"
+    ).style.display="block";
+
+
+    document.getElementById(
+        "profileBox"
+    ).style.display="none";
+
+}
+
+
+
+/* =================================================
+   DIỄN ĐÀN
+================================================= */
+
+function createPost(){
+
+    let title =
+        document.getElementById(
+            "postTitle"
+        ).value;
+
+
+    let text =
+        document.getElementById(
+            "postText"
+        ).value;
+
+
+    if(!title || !text){
+
+        alert(
+            "Hãy nhập tiêu đề và nội dung!"
+        );
+
+        return;
+    }
+
+
+    let post =
+        document.createElement(
+            "div"
+        );
+
+
+    post.className="post";
+
+
+    post.innerHTML=`
+
+        <h3>${title}</h3>
+
+        <p>${text}</p>
+
+        <small>
+        Thành viên AMS · Vừa đăng
+        </small>
+
+    `;
+
+
+    document.getElementById(
+        "posts"
+    ).prepend(post);
+
+
+    document.getElementById(
+        "postTitle"
+    ).value="";
+
+
+    document.getElementById(
+        "postText"
+    ).value="";
+}
+
+
+
+/* =================================================
+   TÌM BẠN
+================================================= */
+
+function findFriend(){
+
+    let id =
+        document.getElementById(
+            "friendID"
+        ).value.trim();
+
+
+    if(!id){
+
+        alert(
+            "Hãy nhập ID!"
+        );
+
+        return;
+    }
+
+
+    let founder =
+        founders.find(
+            f =>
+            f.id.toLowerCase() ===
+            id.toLowerCase()
+        );
+
+
+    if(founder){
+
+        document.getElementById(
+            "friendResult"
+        ).innerHTML=`
+
+        <div class="card">
+
+            <h3>
+
+                ${founder.name}
+
+                <span class="verified">
+                    ✓
+                </span>
+
+            </h3>
+
+            <p>
+                ID: ${founder.id}
+            </p>
+
+            <p>
+                Năm sinh: ${founder.birth}
+            </p>
+
+            <p>
+                Chức vụ:
+                ${founder.role}
+            </p>
+
+
+            <button
+            class="action"
+            onclick="sendFriendRequest('${founder.id}')">
+
+                Gửi lời mời kết bạn
+
+            </button>
+
+        </div>
+
+        `;
+
+        return;
+    }
+
+
+    document.getElementById(
+        "friendResult"
+    ).innerHTML=`
+
+    <div class="card">
+
+        <h3>
+            👤 Thành viên
+        </h3>
+
+        <p>
+            ID: ${id}
+        </p>
+
+
+        <button
+        class="action"
+        onclick="sendFriendRequest('${id}')">
+
+            Gửi lời mời kết bạn
+
+        </button>
+
+    </div>
+
+    `;
+}
+
+
+
+function sendFriendRequest(id){
+
+    alert(
+        "Đã gửi lời mời kết bạn tới " + id
+    );
+
+}
+
+
+
+/* =================================================
+   10 NHIỆM VỤ
+================================================= */
+
+const tasks=[
+
+"Tính: 25 + 37",
+
+"Giải phương trình: x + 7 = 20",
+
+"Tính: 12 × 15",
+
+"Giải phương trình: 2x + 5 = 17",
+
+"Phân tích 84 thành thừa số nguyên tố",
+
+"Giải hệ phương trình đơn giản",
+
+"Tính diện tích hình tròn bán kính 7",
+
+"Chứng minh một đẳng thức đại số",
+
+"Bài toán logic nâng cao",
+
+"Bài toán thử thách Astris MAX"
+
+];
+
+
+function loadTasks(){
+
+    let container =
+        document.getElementById(
+            "taskList"
+        );
+
+
+    tasks.forEach(
+        (task,index)=>{
+
+        container.innerHTML += `
+
+        <div class="task">
+
+            <h3>
+                Bài ${index+1}
+            </h3>
+
+            <p>
+                ${task}
+            </p>
+
+            <textarea
+            placeholder="Viết lời giải của bạn...">
+            </textarea>
+
+            <button
+            class="action"
+            onclick="submitTask(${index+1})">
+
+                Nộp bài
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+
+
+function submitTask(number){
+
+    alert(
+        "Bài " +
+        number +
+        " đã được nộp thành công!"
+    );
+
+}
+
+
+loadTasks();
+
+</script>
+
+</body>
+</html>
