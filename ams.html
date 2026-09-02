@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astris Mathematical Society</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    font-family:Arial,sans-serif;color:white;min-height:100vh;
+    background:
+      radial-gradient(circle at 15% 20%,#063b70 0,transparent 25%),
+      radial-gradient(circle at 85% 80%,#071b4d 0,transparent 30%),#020611;
+}
+body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;
+    background-image:radial-gradient(white 1px,transparent 1px),radial-gradient(#168cff 1px,transparent 1px);
+    background-size:80px 80px,130px 130px;opacity:.18;
+}
+header{text-align:center;padding:35px 20px 25px}
+.logo{font-size:48px;font-weight:bold;color:#66c7ff;text-shadow:0 0 25px #008cff}
+.subtitle{font-size:20px;letter-spacing:6px;color:#b9e5ff}
+nav{
+    width:95%;max-width:1200px;margin:auto;display:flex;justify-content:center;
+    flex-wrap:wrap;gap:8px;padding:10px;background:rgba(3,15,35,.88);
+    border:1px solid #1267a8;border-radius:18px
+}
+nav button{
+    flex:1;min-width:145px;padding:15px;border:0;border-radius:12px;
+    background:transparent;color:#bde8ff;font-size:16px;cursor:pointer
+}
+nav button:hover,nav button.active{background:#075ca8;color:white;box-shadow:0 0 18px #087cff}
+main{width:95%;max-width:1200px;margin:25px auto}
+.page{display:none}.page.active{display:block}
+.card{
+    background:rgba(4,18,40,.9);border:1px solid #1267a8;border-radius:18px;
+    padding:25px;margin-bottom:20px;box-shadow:0 0 25px rgba(0,140,255,.1)
+}
+h2{color:#4fc3ff;margin-bottom:20px}h3{color:#8bdcff;margin-bottom:10px}
+input,textarea{
+    width:100%;padding:13px;margin:7px 0;border:1px solid #1b73b7;border-radius:10px;
+    background:#020b19;color:white;outline:none
+}
+textarea{min-height:100px;resize:vertical}
+button.action{
+    padding:12px 20px;margin-top:10px;border:0;border-radius:10px;
+    background:linear-gradient(90deg,#006be6,#00a8ff);color:white;cursor:pointer;font-weight:bold
+}
+button.action:hover{box-shadow:0 0 18px #008cff}
+.profile{display:grid;grid-template-columns:150px 1fr;gap:25px;align-items:center}
+.avatar{
+    width:130px;height:130px;border-radius:50%;display:flex;justify-content:center;
+    align-items:center;background:#031b38;border:2px solid #19a7ff;box-shadow:0 0 25px #007bff;font-size:35px
+}
+.info p{padding:10px 0;border-bottom:1px solid #123554}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;background:#075ca8}
+.verified{
+    display:inline-flex;justify-content:center;align-items:center;width:20px;height:20px;
+    border-radius:50%;background:#168cff;color:white;font-size:13px;font-weight:bold;box-shadow:0 0 10px #168cff
+}
+.online-dot{
+    display:inline-block;width:10px;height:10px;border-radius:50%;background:#19e67a;
+    box-shadow:0 0 10px #19e67a;margin-right:6px
+}
+.offline-dot{
+    display:inline-block;width:10px;height:10px;border-radius:50%;background:#65717d;
+    margin-right:6px
+}
+.chat-box{
+    height:430px;overflow-y:auto;padding:15px;background:#010914;
+    border:1px solid #123f64;border-radius:14px;margin-bottom:12px
+}
+.message{
+    margin:10px 0;padding:10px 13px;background:#061c31;border-radius:12px;
+    border-left:3px solid #079cff
+}
+.message.me{border-left-color:#29d7ff;background:#06243a}
+.message-name{font-weight:bold;color:#68ccff}
+.message-time{font-size:11px;color:#718da5;margin-left:8px}
+.online-panel{
+    display:flex;gap:12px;flex-wrap:wrap;margin-bottom:15px
+}
+.online-user{
+    padding:8px 12px;border:1px solid #16537e;border-radius:20px;background:#031426
+}
+.task{
+    padding:18px;margin:12px 0;border:1px solid #16537e;border-radius:12px;background:#031426
+}
+.level{
+    display:inline-block;padding:5px 10px;border-radius:15px;margin-bottom:10px;
+    background:#0b416b;color:#9cddff;font-size:13px
+}
+.post{border-left:3px solid #079cff;padding:15px;margin:15px 0;background:#031426;border-radius:8px}
+footer{text-align:center;padding:30px;color:#7194ae}
+@media(max-width:600px){
+    .logo{font-size:34px}.subtitle{font-size:14px}
+    .profile{grid-template-columns:1fr;text-align:center}.avatar{margin:auto}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">ASTRIS</div>
+<div class="subtitle">MATHEMATICAL SOCIETY · AMS</div>
+</header>
+
+<nav>
+<button class="active" onclick="showPage('account',this)">👤 Tài khoản</button>
+<button onclick="showPage('forum',this)">💬 Diễn đàn</button>
+<button onclick="showPage('friends',this)">👥 Kết bạn</button>
+<button onclick="showPage('tasks',this)">📚 Nhiệm vụ</button>
+<button onclick="showPage('about',this)">ⓘ Giới thiệu</button>
+</nav>
+
+<main>
+
+<section id="account" class="page active">
+<div class="card" id="loginBox">
+<h2>🔐 Đăng nhập AMS</h2>
+<input id="loginID" placeholder="ID hoặc Email">
+<input id="loginPass" type="password" placeholder="Mật khẩu">
+<button class="action" onclick="login()">Đăng nhập</button>
+<hr style="margin:20px 0;border-color:#16405f">
+<h3>Đăng ký thành viên</h3>
+<input id="regName" placeholder="Họ và tên">
+<input id="regBirth" type="number" placeholder="Năm sinh">
+<input id="regID" placeholder="Tạo ID">
+<input id="regPass" type="password" placeholder="Mật khẩu">
+<button class="action" onclick="register()">Đăng ký</button>
+</div>
+
+<div class="card" id="profileBox" style="display:none">
+<h2>🌌 Hồ sơ thành viên</h2>
+<div class="profile">
+<div class="avatar">AMS</div>
+<div class="info">
+<p><b>Tên:</b> <span id="pName"></span> <span id="pVerified"></span></p>
+<p><b>Năm sinh:</b> <span id="pBirth"></span></p>
+<p><b>ID:</b> <span id="pID"></span></p>
+<p><b>Chức vụ:</b> <span id="pRole" class="badge"></span></p>
+<p><b>Trạng thái:</b> <span class="online-dot"></span>Đang online</p>
+</div>
+</div>
+<button class="action" onclick="logout()">Đăng xuất</button>
+</div>
+</section>
+
+<section id="forum" class="page">
+<div class="card">
+<h2>💬 Diễn đàn AMS — Chat công cộng</h2>
+<div class="online-panel" id="onlinePanel"></div>
+<div class="chat-box" id="chatBox"></div>
+<div style="display:flex;gap:8px">
+<input id="chatInput" placeholder="Nhập tin nhắn..." onkeydown="if(event.key==='Enter')sendMessage()">
+<button class="action" onclick="sendMessage()">Gửi</button>
+</div>
+<p style="margin-top:12px;color:#7895ad;font-size:13px">
+Trạng thái online của phiên hiện tại được hiển thị bằng chấm xanh.
+</p>
+</div>
+</section>
+
+<section id="friends" class="page">
+<div class="card">
+<h2>👥 Kết bạn</h2>
+<p>Tìm thành viên bằng ID:</p>
+<input id="friendID" placeholder="Ví dụ: AMS001">
+<button class="action" onclick="findFriend()">🔎 Tìm kiếm</button>
+<div id="friendResult"></div>
+</div>
+</section>
+
+<section id="tasks" class="page">
+<div class="card">
+<h2>📚 Nhiệm vụ Toán học</h2>
+<p style="margin-bottom:15px">10 bài tập được sắp xếp từ dễ đến cực khó. Không có chức năng nộp bài.</p>
+<div id="taskList"></div>
+</div>
+</section>
+
+<section id="about" class="page">
+<div class="card">
+<h2>🌌 Astris Mathematical Society</h2>
+<p style="line-height:1.9">
+<b>Astris Mathematical Society (AMS)</b> là một tổ chức phi lợi nhuận được tạo ra
+để phục vụ việc nghiên cứu, học tập và trao đổi kiến thức Toán học lẫn khoa học.
+<br><br>
+Được dẫn dắt bởi các đồng sáng lập:
+<br><br>
+<span style="color:#66c7ff"><b>Phạm Huỳnh</b> <span class="verified">✓</span></span><br>
+<span style="color:#66c7ff"><b>Lê Ngọc Hoàng Long</b> <span class="verified">✓</span></span><br>
+<span style="color:#66c7ff"><b>Lai Gia Đạt</b> <span class="verified">✓</span></span>
+</p>
+</div>
+<div class="card">
+<h2>🔬 Mục tiêu</h2>
+<p style="line-height:1.9">
+• Khuyến khích học tập Toán học<br>
+• Trao đổi kiến thức khoa học<br>
+• Kết nối những người yêu Toán<br>
+• Phát triển tư duy logic<br>
+• Khuyến khích nghiên cứu khoa học
+</p>
+</div>
+</section>
+
+</main>
+
+<footer>© 2026 Astris Mathematical Society (AMS)</footer>
+
+<script>
+const founders=[
+{name:"Phạm Huỳnh",birth:"2013",id:"AMS001",password:"AYZAY OF OMNIVER",role:"Đồng sáng lập",verified:true},
+{name:"Lê Ngọc Hoàng Long",birth:"2015",id:"AMS002",password:"Long9827",role:"Đồng sáng lập",verified:true},
+{name:"Lai Gia Đạt",birth:"2015",id:"AMS003",password:"Dat6819",role:"Đồng sáng lập",verified:true}
+];
+
+let currentUser=null;
+const channel = ("BroadcastChannel" in window) ? new BroadcastChannel("ams_public_chat") : null;
+
+function showPage(page,button){
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    document.getElementById(page).classList.add("active");
+    document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+    button.classList.add("active");
+    if(page==="forum") renderChat();
+}
+
+function register(){
+    const user={
+        name:document.getElementById("regName").value.trim(),
+        birth:document.getElementById("regBirth").value.trim(),
+        id:document.getElementById("regID").value.trim(),
+        pass:document.getElementById("regPass").value,
+        role:"Thành viên",verified:false
+    };
+    if(!user.name||!user.birth||!user.id||!user.pass){
+        alert("Vui lòng nhập đầy đủ thông tin!");return;
+    }
+    if(founders.some(f=>f.id.toLowerCase()===user.id.toLowerCase())){
+        alert("ID này đã thuộc về một tài khoản AMS.");return;
+    }
+    localStorage.setItem("AMS_user",JSON.stringify(user));
+    alert("Đăng ký thành công!");
+    loginUser(user);
+}
+
+function login(){
+    const id=document.getElementById("loginID").value.trim();
+    const pass=document.getElementById("loginPass").value;
+    const founder=founders.find(f=>f.id===id&&f.password===pass);
+    if(founder){loginUser(founder);return;}
+    const saved=localStorage.getItem("AMS_user");
+    if(saved){
+        const user=JSON.parse(saved);
+        if(user.id===id&&user.pass===pass){loginUser(user);return;}
+    }
+    alert("ID hoặc mật khẩu không đúng!");
+}
+
+function loginUser(user){
+    currentUser=user;
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("profileBox").style.display="block";
+    document.getElementById("pName").textContent=user.name;
+    document.getElementById("pBirth").textContent=user.birth||"—";
+    document.getElementById("pID").textContent=user.id;
+    document.getElementById("pRole").textContent=user.role;
+    document.getElementById("pVerified").innerHTML=user.verified?' <span class="verified">✓</span>':"";
+    updateOnline();
+    renderChat();
+}
+
+function logout(){
+    currentUser=null;
+    document.getElementById("loginBox").style.display="block";
+    document.getElementById("profileBox").style.display="none";
+    updateOnline();
+}
+
+function findFriend(){
+    const id=document.getElementById("friendID").value.trim();
+    if(!id){alert("Hãy nhập ID!");return;}
+    const founder=founders.find(f=>f.id.toLowerCase()===id.toLowerCase());
+    if(founder){
+        document.getElementById("friendResult").innerHTML=`
+        <div class="card">
+        <h3>${founder.name} <span class="verified">✓</span></h3>
+        <p>ID: ${founder.id}</p><p>Năm sinh: ${founder.birth}</p>
+        <p>Chức vụ: ${founder.role}</p>
+        <button class="action" onclick="sendFriendRequest('${founder.id}')">Gửi lời mời kết bạn</button>
+        </div>`;
+        return;
+    }
+    const saved=localStorage.getItem("AMS_user");
+    if(saved){
+        const user=JSON.parse(saved);
+        if(user.id.toLowerCase()===id.toLowerCase()){
+            document.getElementById("friendResult").innerHTML=`
+            <div class="card"><h3>${user.name}</h3><p>ID: ${user.id}</p>
+            <p>Năm sinh: ${user.birth}</p><p>Chức vụ: Thành viên</p>
+            <button class="action" onclick="sendFriendRequest('${user.id}')">Gửi lời mời kết bạn</button></div>`;
+            return;
+        }
+    }
+    document.getElementById("friendResult").innerHTML=`<div class="card"><h3>👤 Thành viên</h3><p>ID: ${id}</p>
+    <button class="action" onclick="sendFriendRequest('${id}')">Gửi lời mời kết bạn</button></div>`;
+}
+function sendFriendRequest(id){alert("Đã gửi lời mời kết bạn tới "+id);}
+
+const tasks=[
+["Dễ","Tính: 25 + 37"],
+["Dễ","Tính: 12 × 15"],
+["Trung bình","Giải phương trình: x + 7 = 20"],
+["Trung bình","Giải phương trình: 2x + 5 = 17"],
+["Khá","Phân tích 84 thành thừa số nguyên tố."],
+["Khó","Giải hệ phương trình: x + y = 10 và 2x − y = 5."],
+["Rất khó","Tìm tất cả số nguyên dương n sao cho n² + 3n chia hết cho 10."],
+["Cực khó","Chứng minh một đẳng thức đại số bằng biến đổi tương đương."],
+["Cực khó","Bài toán tổ hợp: tìm số cách thỏa mãn một hệ điều kiện cho trước."],
+["Cực khó","Bài toán thử thách Astris MAX: xây dựng và chứng minh một kết quả tổng quát."]
+];
+
+function loadTasks(){
+    const c=document.getElementById("taskList");
+    c.innerHTML=tasks.map((t,i)=>`
+    <div class="task">
+      <span class="level">${t[0]}</span>
+      <h3>Bài ${i+1}</h3>
+      <p style="line-height:1.7">${t[1]}</p>
+    </div>`).join("");
+}
+
+function getMessages(){
+    try{return JSON.parse(localStorage.getItem("AMS_chat")||"[]")}catch(e){return []}
+}
+function saveMessages(messages){localStorage.setItem("AMS_chat",JSON.stringify(messages.slice(-100)))}
+
+function sendMessage(){
+    if(!currentUser){alert("Hãy đăng nhập để chat.");return;}
+    const input=document.getElementById("chatInput");
+    const text=input.value.trim();
+    if(!text)return;
+    const message={
+        name:currentUser.name,id:currentUser.id,verified:currentUser.verified,
+        text:text,time:new Date().toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"})
+    };
+    const messages=getMessages();messages.push(message);saveMessages(messages);
+    if(channel)channel.postMessage(message);
+    input.value="";renderChat();
+}
+
+function renderChat(){
+    const box=document.getElementById("chatBox");
+    if(!box)return;
+    const messages=getMessages();
+    if(!messages.length){
+        box.innerHTML='<p style="color:#7194ae;text-align:center;padding:30px">Chưa có tin nhắn. Hãy bắt đầu cuộc trò chuyện! 🌌</p>';
+    }else{
+        box.innerHTML=messages.map(m=>`
+        <div class="message ${currentUser&&m.id===currentUser.id?'me':''}">
+          <div><span class="message-name">${escapeHTML(m.name)}</span>
+          ${m.verified?'<span class="verified">✓</span>':''}
+          <span class="message-time">${m.time}</span></div>
+          <div style="margin-top:5px">${escapeHTML(m.text)}</div>
+        </div>`).join("");
+        box.scrollTop=box.scrollHeight;
+    }
+    updateOnline();
+}
+
+function escapeHTML(s){
+    return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+
+const presenceKey="AMS_presence";
+const tabId=Math.random().toString(36).slice(2);
+
+function updateOnline(){
+    let presence={};
+    try{presence=JSON.parse(localStorage.getItem(presenceKey)||"{}")}catch(e){}
+    if(currentUser){
+        presence[tabId]={id:currentUser.id,name:currentUser.name,verified:currentUser.verified,last:Date.now()};
+    }else delete presence[tabId];
+    localStorage.setItem(presenceKey,JSON.stringify(presence));
+
+    const panel=document.getElementById("onlinePanel");
+    if(!panel)return;
+    const active=Object.values(presence).filter(x=>Date.now()-x.last<15000);
+    panel.innerHTML=active.length
+      ? active.map(x=>`<div class="online-user"><span class="online-dot"></span>${escapeHTML(x.name)} ${x.verified?'<span class="verified">✓</span>':''}</div>`).join("")
+      : '<div style="color:#7194ae">Chưa có thành viên nào đang online.</div>';
+}
+
+setInterval(updateOnline,5000);
+window.addEventListener("beforeunload",()=>{
+    let presence={};
+    try{presence=JSON.parse(localStorage.getItem(presenceKey)||"{}")}catch(e){}
+    delete presence[tabId];localStorage.setItem(presenceKey,JSON.stringify(presence));
+});
+window.addEventListener("storage",()=>{renderChat();updateOnline()});
+if(channel)channel.onmessage=()=>renderChat();
+
+loadTasks();
+updateOnline();
+</script>
+
+</body>
+</html>
